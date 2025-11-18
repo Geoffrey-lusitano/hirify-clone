@@ -1,0 +1,8 @@
+{
+  "short_name": "Hirify",
+  "name": "Hirify",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#11809C",
+  "background_color": "#11809C"
+}

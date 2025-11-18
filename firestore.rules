@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Fonction pour vérifier si l'utilisateur est authentifié
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Règle pour la collection 'users'
+    match /users/{userId} {
+      // Autoriser la lecture à tous les utilisateurs authentifiés
+      allow read: if isAuthenticated();
+      
+      // Autoriser l'écriture uniquement au propriétaire du document
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Autoriser la lecture de tous les documents pour les utilisateurs authentifiés
+    match /{document=**} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+  }
+}
